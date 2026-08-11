@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MVC_exercise.Models;
 
 namespace MVC_exercise.Data;
 
 public class SchoolDbContext(DbContextOptions<SchoolDbContext> options)
-    : DbContext(options)
+    : IdentityDbContext<ApplicationUser>(options)
 {
 
     public DbSet<Student> Students => Set<Student>();
@@ -12,11 +13,13 @@ public class SchoolDbContext(DbContextOptions<SchoolDbContext> options)
     public DbSet<Course> Courses => Set<Course>();
 
     public DbSet<Enrollment> Enrollments => Set<Enrollment>();
-    
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
         base.OnModelCreating(modelBuilder);
+
 
         modelBuilder.Entity<Student>()
             .Property(student => student.DateOfBirth)
