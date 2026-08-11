@@ -1,0 +1,49 @@
+@model MVC_exercise.ViewModels.Account.LoginViewModel
+@{
+    ViewData["Title"] = "Sign in";
+    ViewData["HideNavigation"] = true;
+}
+
+<section class="auth-page" aria-labelledby="login-heading">
+    <p class="eyebrow">Account access</p>
+    <h1 id="login-heading">Sign in</h1>
+    <p class="form-introduction">Sign in with an approved account to access academic records.</p>
+
+    @if (TempData["RegistrationMessage"] is string registrationMessage)
+    {
+        <div class="app-alert app-alert-success" role="status">@registrationMessage</div>
+    }
+
+    <form asp-action="Login" method="post" class="auth-form">
+        <input asp-for="ReturnUrl" type="hidden" />
+
+        <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+
+        <div class="form-field">
+            <label asp-for="Email">Email <span aria-hidden="true">*</span></label>
+            <input asp-for="Email" autocomplete="email" autofocus />
+            <span asp-validation-for="Email" class="field-error"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="Password">Password <span aria-hidden="true">*</span></label>
+            <input asp-for="Password" autocomplete="current-password" />
+            <span asp-validation-for="Password" class="field-error"></span>
+        </div>
+
+        <label class="remember-choice">
+            <input asp-for="RememberMe" />
+            Keep me signed in on this device
+        </label>
+
+        <div class="form-actions">
+            <button type="submit" class="button-primary">Sign in</button>
+        </div>
+    </form>
+
+    <p class="account-switch">Need an account? <a asp-action="Register">Request access</a></p>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

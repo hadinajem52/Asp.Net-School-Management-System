@@ -1,14 +1,25 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC_exercise.Models;
+using MVC_exercise.Services;
+using MVC_exercise.ViewModels;
 
 namespace MVC_exercise.Controllers;
 
-public class HomeController : Controller
+[Authorize]
+public class HomeController(SchoolDataService schoolData) : Controller
 {
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var viewModel = new DashboardViewModel
+        {
+            StudentCount = await schoolData.GetStudentCountAsync(),
+            CourseCount = await schoolData.GetCourseCountAsync(),
+            RecentStudents = await schoolData.GetMostRecentStudentsAsync()
+        };
+
+        return View(viewModel);
     }
 
     public IActionResult Privacy()
@@ -17,6 +28,7 @@ public class HomeController : Controller
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    [AllowAnonymous]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

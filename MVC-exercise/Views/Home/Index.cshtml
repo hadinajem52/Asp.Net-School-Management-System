@@ -1,8 +1,65 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@model MVC_exercise.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="dashboard-hero" aria-labelledby="dashboard-title">
+    <p class="eyebrow">Academic administration</p>
+    <div class="hero-heading">
+        <div>
+            <h1 id="dashboard-title">Your course ledger</h1>
+            <p>See the current shape of your student records before you begin managing them.</p>
+        </div>
+        <span class="hero-mark" aria-hidden="true">SC</span>
+    </div>
+</section>
+
+<section class="stat-grid" aria-label="System totals">
+    <article class="stat-card">
+        <p class="stat-label">Students</p>
+        <p class="stat-value">@Model.StudentCount</p>
+        <p class="stat-detail">registered learner@(Model.StudentCount == 1 ? string.Empty : "s")</p>
+    </article>
+
+    <article class="stat-card stat-card-accent">
+        <p class="stat-label">Courses</p>
+        <p class="stat-value">@Model.CourseCount</p>
+        <p class="stat-detail">available course@(Model.CourseCount == 1 ? string.Empty : "s")</p>
+    </article>
+</section>
+
+<section class="recent-section" aria-labelledby="recent-students-title">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Latest activity</p>
+            <h2 id="recent-students-title">Recently added students</h2>
+        </div>
+        <span class="record-count">Latest 5</span>
+    </div>
+
+    @if (Model.RecentStudents.Count == 0)
+    {
+        <div class="dashboard-empty-state">
+            <p class="empty-state-title">No students have been added yet.</p>
+            <p>When you create a student record, it will appear here.</p>
+        </div>
+    }
+    else
+    {
+        <div class="student-records" role="list">
+            @foreach (var student in Model.RecentStudents)
+            {
+                <article class="student-record" role="listitem">
+                    <span class="record-id">#@student.Id.ToString("D3")</span>
+                    <div>
+                        <h3>@student.FirstName @student.LastName</h3>
+                        <p>@student.Email</p>
+                    </div>
+                    <time datetime="@student.DateOfBirth?.ToString("yyyy-MM-dd")">
+                        @student.DateOfBirth?.ToString("MMM d, yyyy")
+                    </time>
+                </article>
+            }
+        </div>
+    }
+</section>

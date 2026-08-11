@@ -1,0 +1,43 @@
+@model MVC_exercise.ViewModels.Account.RegisterViewModel
+@{
+    ViewData["Title"] = "Request access";
+    ViewData["HideNavigation"] = true;
+}
+
+<section class="auth-page" aria-labelledby="register-heading">
+    <p class="eyebrow">New account</p>
+    <h1 id="register-heading">Request access</h1>
+    <p class="form-introduction">Create an account for read-only access. An administrator must approve your request before you can sign in.</p>
+
+    <form asp-action="Register" method="post" class="auth-form">
+        <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+
+        <div class="form-field">
+            <label asp-for="Email">Email <span aria-hidden="true">*</span></label>
+            <input asp-for="Email" autocomplete="email" autofocus />
+            <span asp-validation-for="Email" class="field-error"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="Password">Password <span aria-hidden="true">*</span></label>
+            <input asp-for="Password" autocomplete="new-password" />
+            <span asp-validation-for="Password" class="field-error"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="ConfirmPassword">Confirm password <span aria-hidden="true">*</span></label>
+            <input asp-for="ConfirmPassword" autocomplete="new-password" />
+            <span asp-validation-for="ConfirmPassword" class="field-error"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="button-primary">Send access request</button>
+        </div>
+    </form>
+
+    <p class="account-switch">Already have an account? <a asp-action="Login">Sign in</a></p>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
