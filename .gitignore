@@ -1,3 +1,19 @@
 /.opencode
 /.vscode
 AGENTS.md
+
+# .NET build output
+**/bin/
+**/obj/
+/build-artifacts/
+
+# IDE and user-specific files
+**/.vs/
+**/.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Local-only ASP.NET Core settings
+**/appsettings.Local.json
