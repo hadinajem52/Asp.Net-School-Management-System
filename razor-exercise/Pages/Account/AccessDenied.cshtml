@@ -1,0 +1,16 @@
+@page
+@{
+    ViewData["Title"] = "Access denied";
+}
+
+<section class="auth-page" aria-labelledby="access-denied-heading">
+    <a class="back-link" asp-page="/Index">← Back to dashboard</a>
+
+    <p class="eyebrow">Restricted action</p>
+    <h1 id="access-denied-heading">Access denied</h1>
+    <p class="form-introduction">Your account can view this information, but it does not have permission to change it.</p>
+
+    <div class="auth-form" role="alert">
+        <p class="access-denied-message">Ask an administrator if you need access to manage school records.</p>
+    </div>
+</section>

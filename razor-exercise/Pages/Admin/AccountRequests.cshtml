@@ -1,0 +1,68 @@
+@page
+@model razor_exercise.Pages.Admin.AccountRequestsModel
+@{
+    ViewData["Title"] = "Account requests";
+}
+
+<section class="directory-hero" aria-labelledby="account-requests-title">
+    <p class="eyebrow">Administrator review</p>
+    <div class="directory-heading">
+        <div>
+            <h1 id="account-requests-title">Account requests</h1>
+            <p>Review people waiting for read-only access to the course manager.</p>
+        </div>
+
+        <span class="directory-total">@Model.PendingAccounts.Count pending</span>
+    </div>
+</section>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <component type="typeof(Alert)" render-mode="Static" param-Message="@successMessage" />
+}
+
+@if (TempData["ErrorMessage"] is string errorMessage)
+{
+    <component type="typeof(Alert)" render-mode="Static" param-Message="@errorMessage" param-IsError="@true" />
+}
+
+@if (Model.PendingAccounts.Count == 0)
+{
+    <component type="typeof(EmptyState)" render-mode="Static"
+               param-Title='@("No pending requests.")'
+               param-Message='@("New sign-up requests will appear here for review.")' />
+}
+else
+{
+    <div class="directory-table-wrap">
+        <table class="directory-table">
+            <caption>Accounts awaiting an administrator decision</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Email</th>
+                    <th scope="col">Requested role</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var account in Model.PendingAccounts)
+                {
+                    <tr>
+                        <td class="table-name">@account.Email</td>
+                        <td>Viewer</td>
+                        <td class="table-actions account-request-actions">
+                            <form method="post" asp-page-handler="Approve">
+                                <input type="hidden" name="id" value="@account.Id" />
+                                <button type="submit" class="button-primary">Approve</button>
+                            </form>
+                            <form method="post" asp-page-handler="Reject">
+                                <input type="hidden" name="id" value="@account.Id" />
+                                <button type="submit" class="button-danger">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

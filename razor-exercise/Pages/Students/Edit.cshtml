@@ -1,0 +1,52 @@
+@page "{id:int}"
+@model razor_exercise.Pages.Students.EditModel
+@{
+    ViewData["Title"] = "Edit student";
+}
+
+<section class="form-page" aria-labelledby="edit-student-title">
+    <a class="back-link" asp-page="./Details" asp-route-id="@Model.Student.Id">← Back to student record</a>
+    <p class="eyebrow">Student record · @Model.Student.Id.ToString("D3")</p>
+    <h1 id="edit-student-title">Edit student</h1>
+    <p class="form-introduction">Review the details below, then save the updated student record.</p>
+
+    <form method="post" class="student-form" novalidate>
+        <input type="hidden" asp-for="Student.Id" />
+        <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+
+        <div class="form-grid">
+            <div class="form-field">
+                <label asp-for="Student.FirstName">First name <span aria-hidden="true">*</span></label>
+                <input asp-for="Student.FirstName" autocomplete="given-name" />
+                <span asp-validation-for="Student.FirstName" class="field-error"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Student.LastName">Last name <span aria-hidden="true">*</span></label>
+                <input asp-for="Student.LastName" autocomplete="family-name" />
+                <span asp-validation-for="Student.LastName" class="field-error"></span>
+            </div>
+
+            <div class="form-field form-field-wide">
+                <label asp-for="Student.Email">Email address <span aria-hidden="true">*</span></label>
+                <input asp-for="Student.Email" autocomplete="email" />
+                <span asp-validation-for="Student.Email" class="field-error"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Student.DateOfBirth">Date of birth <span aria-hidden="true">*</span></label>
+                <input asp-for="Student.DateOfBirth" max="@DateTime.Today.ToString("yyyy-MM-dd")" autocomplete="bday" />
+                <span asp-validation-for="Student.DateOfBirth" class="field-error"></span>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="button-primary" type="submit">Save changes</button>
+            <a class="button-secondary" asp-page="./Details" asp-route-id="@Model.Student.Id">Cancel</a>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

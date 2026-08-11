@@ -1,0 +1,16 @@
+<article class="student-record" role="listitem">
+    <span class="record-id">@Student.Id.ToString("D3")</span>
+    <div>
+        <h3><a href="@DetailsUrl">@Student.FirstName @Student.LastName</a></h3>
+        <p>@Student.Email</p>
+    </div>
+    @if (Student.DateOfBirth is DateTime dateOfBirth)
+    {
+        <time datetime="@dateOfBirth.ToString("yyyy-MM-dd")">Born @dateOfBirth.ToString("dd MMM yyyy")</time>
+    }
+</article>
+
+@code {
+    [Parameter, EditorRequired] public Student Student { get; set; } = null!;
+    [Parameter, EditorRequired] public string DetailsUrl { get; set; } = string.Empty;
+}

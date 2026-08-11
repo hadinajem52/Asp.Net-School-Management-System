@@ -1,0 +1,57 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<section class="dashboard-hero" aria-labelledby="dashboard-title">
+    <p class="eyebrow">Academic administration</p>
+    <div class="hero-heading">
+        <div>
+            <h1 id="dashboard-title">Your course ledger</h1>
+            <p>See the current shape of your student records before you begin managing them.</p>
+        </div>
+        <span class="hero-mark" aria-hidden="true">SC</span>
+    </div>
+</section>
+
+<section class="stat-grid" aria-label="System totals">
+    <article class="stat-card">
+        <p class="stat-label">Students</p>
+        <p class="stat-value">@Model.StudentCount</p>
+        <p class="stat-detail">registered learner@(Model.StudentCount == 1 ? string.Empty : "s")</p>
+    </article>
+    <article class="stat-card stat-card-accent">
+        <p class="stat-label">Courses</p>
+        <p class="stat-value">@Model.CourseCount</p>
+        <p class="stat-detail">available course@(Model.CourseCount == 1 ? string.Empty : "s")</p>
+    </article>
+</section>
+
+<section class="recent-section" aria-labelledby="recent-students-title">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Latest activity</p>
+            <h2 id="recent-students-title">Recently added students</h2>
+        </div>
+        <span class="record-count">Latest 5</span>
+    </div>
+
+    @if (Model.RecentStudents.Count == 0)
+    {
+        <component type="typeof(EmptyState)" render-mode="Static"
+                   param-Title='@("No students have been added yet.")'
+                   param-Message='@("When you create a student record, it will appear here.")' />
+    }
+    else
+    {
+        <div class="student-records" role="list">
+            @foreach (var student in Model.RecentStudents)
+            {
+                <component type="typeof(StudentCard)" render-mode="Static"
+                           param-Student="@student"
+                           param-DetailsUrl='@($"/Students/Details/{student.Id}")' />
+            }
+        </div>
+    }
+</section>

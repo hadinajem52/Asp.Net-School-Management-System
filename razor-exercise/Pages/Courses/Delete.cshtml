@@ -1,0 +1,24 @@
+@page "{id:int}"
+@model razor_exercise.Pages.Courses.DeleteModel
+@{
+    ViewData["Title"] = "Delete course";
+}
+
+<section class="delete-page" aria-labelledby="delete-course-title">
+    <a class="back-link" asp-page="./Details" asp-route-id="@Model.Course.Id">← Back to course record</a>
+    <p class="eyebrow">Confirmation required</p>
+    <h1 id="delete-course-title">Delete course?</h1>
+    <p class="form-introduction">This action will permanently remove the selected course record.</p>
+
+    <component type="typeof(ConfirmationDialog)" render-mode="Static"
+               param-ItemLabel='@("Selected course")'
+               param-ItemName="@Model.Course.Name"
+               param-ItemDetail='@($"{Model.Course.Credits} credit{(Model.Course.Credits == 1 ? string.Empty : "s")}")'
+               param-Warning='@("Student enrollments in this course will also be removed.")' />
+
+    <form method="post" class="form-actions">
+        <input type="hidden" name="id" value="@Model.Course.Id" />
+        <button class="button-danger" type="submit">Yes, delete course</button>
+        <a class="button-secondary" asp-page="./Details" asp-route-id="@Model.Course.Id">Cancel</a>
+    </form>
+</section>

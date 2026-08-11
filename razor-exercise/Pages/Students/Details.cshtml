@@ -1,0 +1,89 @@
+@page "{id:int}"
+@model razor_exercise.Pages.Students.DetailsModel
+@{
+    ViewData["Title"] = $"{Model.Student.FirstName} {Model.Student.LastName}";
+}
+
+<section class="student-profile" aria-labelledby="student-name">
+    <a class="back-link" asp-page="./Index">← Back to students</a>
+    <p class="eyebrow">Student record · @Model.Student.Id.ToString("D3")</p>
+    <h1 id="student-name">@Model.Student.FirstName @Model.Student.LastName</h1>
+    <p class="profile-subtitle">A complete view of this student’s current directory information.</p>
+
+    @if (TempData["SuccessMessage"] is string successMessage)
+    {
+        <div class="success-alert" role="alert">@successMessage</div>
+    }
+
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="profile-actions">
+            <a class="button-primary" asp-page="./Edit" asp-route-id="@Model.Student.Id">Edit student</a>
+            <a class="button-secondary" asp-page="./Enroll" asp-route-id="@Model.Student.Id">Enroll in courses</a>
+        </div>
+    }
+
+    <dl class="record-details">
+        <div>
+            <dt>Email address</dt>
+            <dd><a href="mailto:@Model.Student.Email">@Model.Student.Email</a></dd>
+        </div>
+        <div>
+            <dt>Date of birth</dt>
+            <dd>
+                @if (Model.Student.DateOfBirth is DateTime dateOfBirth)
+                {
+                    <time datetime="@dateOfBirth.ToString("yyyy-MM-dd")">@dateOfBirth.ToString("dd MMMM yyyy")</time>
+                }
+                else
+                {
+                    <span>Not recorded</span>
+                }
+            </dd>
+        </div>
+        <div>
+            <dt>Student ID</dt>
+            <dd>@Model.Student.Id.ToString("D3")</dd>
+        </div>
+    </dl>
+
+    <section class="enrollment-section" aria-labelledby="enrolled-courses-title">
+        <div class="section-heading">
+            <h2 id="enrolled-courses-title">Enrolled courses</h2>
+            <span class="record-count">@Model.EnrolledCourses.Count course@(Model.EnrolledCourses.Count == 1 ? string.Empty : "s")</span>
+        </div>
+
+        @if (Model.EnrolledCourses.Count == 0)
+        {
+            <div class="dashboard-empty-state">
+                <p class="empty-state-title">No courses yet.</p>
+                <p>This student is not currently enrolled in any courses.</p>
+            </div>
+        }
+        else
+        {
+            <div class="student-records">
+                @foreach (var course in Model.EnrolledCourses)
+                {
+                    <article class="student-record">
+                        <span class="record-id">@course.Id.ToString("D3")</span>
+                        <div>
+                            <h3><a asp-page="/Courses/Details" asp-route-id="@course.Id">@course.Name</a></h3>
+                            <p>@course.Description</p>
+                        </div>
+                        <div class="course-enrollment-actions">
+                            <span class="course-credits">@course.Credits credit@(course.Credits == 1 ? string.Empty : "s")</span>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <form method="post" asp-page-handler="RemoveEnrollment">
+                                    <input type="hidden" name="courseId" value="@course.Id" />
+                                    <button class="button-danger" type="submit">Remove</button>
+                                </form>
+                            }
+                        </div>
+                    </article>
+                }
+            </div>
+        }
+    </section>
+</section>

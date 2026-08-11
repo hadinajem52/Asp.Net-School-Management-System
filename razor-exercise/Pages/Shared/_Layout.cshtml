@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Student Course Manager</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/razor_exercise.styles.css" asp-append-version="true" />
+</head>
+<body>
+    @if (ViewData["HideNavigation"] is not true)
+    {
+    <header class="site-header">
+        <nav class="site-navigation" aria-label="Main navigation">
+            <a class="site-brand" asp-page="/Index">
+                <span aria-hidden="true">SC</span>
+                <span>Student Course<br />Manager</span>
+            </a>
+            <div class="site-nav-links">
+                    <a class="site-nav-link" asp-page="/Index">Dashboard</a>
+                    <a class="site-nav-link" asp-page="/Students/Index">Students</a>
+                    <a class="site-nav-link" asp-page="/Courses/Index">Courses</a>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="site-nav-link" asp-page="/Admin/AccountRequests">Account requests</a>
+                    }
+
+                    @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <span class="signed-in-user">@User.Identity.Name</span>
+                    <form method="post" asp-page="/Account/Logout" class="logout-form">
+                        <button type="submit" class="site-nav-link logout-button">Sign out</button>
+                    </form>
+                }
+                else
+                {
+                    <a class="site-nav-link" asp-page="/Account/Login">Sign in</a>
+                }
+            </div>
+        </nav>
+    </header>
+    }
+
+    <div class="site-shell">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div class="site-shell">
+            Student Course Manager <span aria-hidden="true">·</span> Academic records, clearly arranged
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

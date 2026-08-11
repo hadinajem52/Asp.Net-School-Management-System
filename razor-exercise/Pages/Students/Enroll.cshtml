@@ -1,0 +1,62 @@
+@page "{id:int}"
+@model razor_exercise.Pages.Students.EnrollModel
+@{
+    ViewData["Title"] = "Enroll in courses";
+}
+
+<section class="form-page" aria-labelledby="enroll-title">
+    <a class="back-link" asp-page="./Details" asp-route-id="@Model.Student.Id">← Back to student record</a>
+    <p class="eyebrow">Student enrollment</p>
+    <h1 id="enroll-title">Enroll @Model.Student.FirstName</h1>
+    <p class="form-introduction">Select one or more courses to add to this student’s schedule.</p>
+
+    @if (Model.AvailableCourses.Count == 0)
+    {
+        <div class="dashboard-empty-state">
+            <p class="empty-state-title">No courses available.</p>
+            <p>@Model.Student.FirstName is already enrolled in every available course.</p>
+        </div>
+    }
+    else
+    {
+        <form method="post" class="enrollment-form">
+            <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+
+            <fieldset class="course-choice-list">
+                <legend>Available courses</legend>
+
+                @foreach (var course in Model.AvailableCourses)
+                {
+                    <label class="course-choice">
+                        <input type="checkbox"
+                               name="SelectedCourseIds"
+                               value="@course.Id"
+                               checked="@Model.SelectedCourseIds.Contains(course.Id)" />
+                        <span>
+                            <strong>@course.Name</strong>
+                            <span class="course-choice-description">@course.Description</span>
+                        </span>
+                        <span class="course-choice-credits">@course.Credits credit@(course.Credits == 1 ? string.Empty : "s")</span>
+                    </label>
+                }
+            </fieldset>
+
+            <div class="form-actions">
+                <button class="button-primary" type="submit">Enroll in selected courses</button>
+                <a class="button-secondary" asp-page="./Details" asp-route-id="@Model.Student.Id">Cancel</a>
+            </div>
+
+            <component type="typeof(LoadingIndicator)" render-mode="Static"
+                       param-Id='@("enrollment-loading")'
+                       param-Message='@("Saving enrollments…")' />
+        </form>
+    }
+</section>
+
+@section Scripts {
+    <script>
+        document.querySelector(".enrollment-form")?.addEventListener("submit", () => {
+            document.getElementById("enrollment-loading")?.removeAttribute("hidden");
+        });
+    </script>
+}

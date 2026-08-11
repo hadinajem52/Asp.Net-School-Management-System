@@ -1,0 +1,66 @@
+@page
+@model razor_exercise.Pages.Courses.IndexModel
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<section class="directory-hero" aria-labelledby="courses-title">
+    <p class="eyebrow">Course catalogue</p>
+    <div class="directory-heading">
+        <div>
+            <h1 id="courses-title">Courses</h1>
+            <p>Every course currently available in the course manager.</p>
+        </div>
+
+        <div class="directory-actions">
+            <span class="directory-total">@Model.TotalCourseCount course@(Model.TotalCourseCount == 1 ? string.Empty : "s")</span>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="button-primary" asp-page="./Create">Add course</a>
+            }
+        </div>
+    </div>
+</section>
+
+<form method="get" class="course-search" role="search">
+    <component type="typeof(SearchBar)" render-mode="Static"
+               param-InputId='@("course-search-input")'
+               param-Name='@("SearchTerm")'
+               param-Label='@("Search courses")'
+               param-Placeholder='@("Search by course name")'
+               param-Value="@Model.SearchTerm"
+               param-ClearUrl="@Model.ClearSearchUrl" />
+</form>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <component type="typeof(Alert)" render-mode="Static" param-Message="@successMessage" />
+}
+
+@if (Model.Courses.Count == 0)
+{
+    <component type="typeof(EmptyState)" render-mode="Static"
+               param-Title='@("No courses found.")'
+               param-Message="@Model.EmptyMessage"
+               param-ActionText='@("Clear search")'
+               param-ActionUrl="@Model.ClearSearchUrl" />
+}
+else
+{
+    <div class="course-card-grid">
+        @foreach (var course in Model.Courses)
+        {
+            <component type="typeof(CourseCard)" render-mode="Static"
+                       param-Course="@course"
+                       param-DetailsUrl='@($"/Courses/Details/{course.Id}")'
+                       param-DeleteUrl='@($"/Courses/Delete/{course.Id}")'
+                       param-ShowManagementActions="@(User.IsInRole("Admin"))" />
+        }
+    </div>
+
+    <component type="typeof(PaginationControls)" render-mode="Static"
+               param-PagePath='@("/Courses")'
+               param-CurrentPage="@Model.PageNumber"
+               param-TotalPages="@Model.TotalPages"
+               param-SearchTerm="@Model.SearchTerm" />
+}

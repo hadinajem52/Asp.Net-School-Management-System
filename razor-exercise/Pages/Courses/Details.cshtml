@@ -1,0 +1,65 @@
+@page "{id:int}"
+@model razor_exercise.Pages.Courses.DetailsModel
+@{
+    ViewData["Title"] = Model.Course.Name;
+}
+
+<section class="student-profile" aria-labelledby="course-name">
+    <a class="back-link" asp-page="./Index">← Back to courses</a>
+    <p class="eyebrow">Course record · @Model.Course.Id.ToString("D3")</p>
+    <h1 id="course-name">@Model.Course.Name</h1>
+    <p class="profile-subtitle">A complete view of this course’s current catalogue information.</p>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="profile-actions">
+            <a class="button-primary" asp-page="./Edit" asp-route-id="@Model.Course.Id">Edit course</a>
+        </div>
+    }
+
+    <dl class="record-details">
+        <div class="record-details-wide">
+            <dt>Description</dt>
+            <dd>@Model.Course.Description</dd>
+        </div>
+        <div>
+            <dt>Credits</dt>
+            <dd>@Model.Course.Credits</dd>
+        </div>
+        <div>
+            <dt>Course ID</dt>
+            <dd>@Model.Course.Id.ToString("D3")</dd>
+        </div>
+    </dl>
+
+    <section class="enrollment-section" aria-labelledby="enrolled-students-title">
+        <div class="section-heading">
+            <h2 id="enrolled-students-title">Enrolled students</h2>
+            <span class="record-count">@Model.EnrolledStudents.Count student@(Model.EnrolledStudents.Count == 1 ? string.Empty : "s")</span>
+        </div>
+
+        @if (Model.EnrolledStudents.Count == 0)
+        {
+            <div class="dashboard-empty-state">
+                <p class="empty-state-title">No students enrolled.</p>
+                <p>No students are currently enrolled in this course.</p>
+            </div>
+        }
+        else
+        {
+            <div class="student-records">
+                @foreach (var student in Model.EnrolledStudents)
+                {
+                    <article class="student-record">
+                        <span class="record-id">@student.Id.ToString("D3")</span>
+                        <div>
+                            <h3><a asp-page="/Students/Details" asp-route-id="@student.Id">@student.FirstName @student.LastName</a></h3>
+                            <p>Enrolled in this course</p>
+                        </div>
+                        <a class="student-contact" href="mailto:@student.Email">@student.Email</a>
+                    </article>
+                }
+            </div>
+        }
+    </section>
+</section>

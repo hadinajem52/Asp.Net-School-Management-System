@@ -1,0 +1,20 @@
+<div class="search-bar">
+    <label for="@InputId">@Label</label>
+    <div class="search-bar-controls">
+        <input id="@InputId" name="@Name" type="search" value="@Value" placeholder="@Placeholder" />
+        <button class="button-primary" type="submit">Search</button>
+        @if (!string.IsNullOrWhiteSpace(ClearUrl))
+        {
+            <a class="button-secondary" href="@ClearUrl">Clear</a>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string InputId { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string Name { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string Label { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string Placeholder { get; set; } = string.Empty;
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public string? ClearUrl { get; set; }
+}

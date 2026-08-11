@@ -1,0 +1,46 @@
+@page "{id:int}"
+@model razor_exercise.Pages.Courses.EditModel
+@{
+    ViewData["Title"] = "Edit course";
+}
+
+<section class="form-page" aria-labelledby="edit-course-title">
+    <a class="back-link" asp-page="./Details" asp-route-id="@Model.Course.Id">← Back to course record</a>
+    <p class="eyebrow">Course record · @Model.Course.Id.ToString("D3")</p>
+    <h1 id="edit-course-title">Edit course</h1>
+    <p class="form-introduction">Review the details below, then save the updated course record.</p>
+
+    <form method="post" class="course-form" novalidate>
+        <input type="hidden" asp-for="Course.Id" />
+        <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+
+        <div class="form-grid">
+            <div class="form-field form-field-wide">
+                <label asp-for="Course.Name">Course name <span aria-hidden="true">*</span></label>
+                <input asp-for="Course.Name" autocomplete="off" />
+                <span asp-validation-for="Course.Name" class="field-error"></span>
+            </div>
+
+            <div class="form-field form-field-wide">
+                <label asp-for="Course.Description">Description <span aria-hidden="true">*</span></label>
+                <textarea asp-for="Course.Description" rows="5"></textarea>
+                <span asp-validation-for="Course.Description" class="field-error"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Course.Credits">Credits <span aria-hidden="true">*</span></label>
+                <input asp-for="Course.Credits" type="number" min="1" max="6" />
+                <span asp-validation-for="Course.Credits" class="field-error"></span>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="button-primary" type="submit">Save changes</button>
+            <a class="button-secondary" asp-page="./Details" asp-route-id="@Model.Course.Id">Cancel</a>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

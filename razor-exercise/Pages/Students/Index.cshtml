@@ -1,0 +1,111 @@
+@page
+@model razor_exercise.Pages.Students.IndexModel
+@{
+    ViewData["Title"] = "Students";
+}
+
+<section class="directory-hero" aria-labelledby="students-title">
+    <p class="eyebrow">Student directory</p>
+    <div class="directory-heading">
+        <div>
+            <h1 id="students-title">Students</h1>
+            <p>Every learner currently registered in the course manager.</p>
+        </div>
+
+        <div class="directory-actions">
+            <span class="directory-total">@Model.TotalStudentCount record@(Model.TotalStudentCount == 1 ? string.Empty : "s")</span>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="button-primary" asp-page="./Create">Add student</a>
+            }
+        </div>
+    </div>
+</section>
+
+<form method="get" class="student-search" role="search">
+    <input type="hidden" name="SortBy" value="@Model.SortBy" />
+    <component type="typeof(SearchBar)" render-mode="Static"
+               param-InputId='@("student-search-input")'
+               param-Name='@("SearchTerm")'
+               param-Label='@("Search students")'
+               param-Placeholder='@("Search by first or last name")'
+               param-Value="@Model.SearchTerm"
+               param-ClearUrl="@Model.ClearSearchUrl" />
+</form>
+
+<form method="get" class="student-sort">
+    <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+    <component type="typeof(SortDropdown)" render-mode="Static"
+               param-InputId='@("student-sort-select")'
+               param-Name='@("SortBy")'
+               param-Label='@("Sort students")'
+               param-Options="@(Model.SortOptions)"
+               param-SelectedValue="@Model.SortBy" />
+</form>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <component type="typeof(Alert)" render-mode="Static" param-Message="@successMessage" />
+}
+
+@if (Model.Students.Count == 0)
+{
+    <component type="typeof(EmptyState)" render-mode="Static"
+               param-Title='@("No students found.")'
+               param-Message="@Model.EmptyMessage"
+               param-ActionText='@("Clear search")'
+               param-ActionUrl="@Model.ClearSearchUrl" />
+}
+else
+{
+    <div class="directory-table-wrap">
+        <table class="directory-table">
+            <caption>Students in the selected order</caption>
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Student</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Date of birth</th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th scope="col">Actions</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model.Students)
+                {
+                    <tr>
+                        <td class="table-id">@student.Id.ToString("D3")</td>
+                        <td class="table-name">
+                            <a asp-page="./Details" asp-route-id="@student.Id">
+                                @student.FirstName @student.LastName
+                            </a>
+                        </td>
+                        <td><a href="mailto:@student.Email">@student.Email</a></td>
+                        <td>
+                            @if (student.DateOfBirth is DateTime dateOfBirth)
+                            {
+                                <time datetime="@dateOfBirth.ToString("yyyy-MM-dd")">@dateOfBirth.ToString("dd MMM yyyy")</time>
+                            }
+                        </td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td class="table-actions">
+                                <a class="button-danger" asp-page="./Delete" asp-route-id="@student.Id">Delete</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <component type="typeof(PaginationControls)" render-mode="Static"
+               param-PagePath='@("/Students")'
+               param-CurrentPage="@Model.PageNumber"
+               param-TotalPages="@Model.TotalPages"
+               param-SearchTerm="@Model.SearchTerm"
+               param-SortBy="@Model.SortBy" />
+}

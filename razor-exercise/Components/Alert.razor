@@ -1,0 +1,8 @@
+<div class="app-alert @(IsError ? "app-alert-error" : "app-alert-success")" role="alert">
+    @Message
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Message { get; set; } = string.Empty;
+    [Parameter] public bool IsError { get; set; }
+}

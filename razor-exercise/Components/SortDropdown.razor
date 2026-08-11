@@ -1,0 +1,20 @@
+<div class="sort-dropdown">
+    <label for="@InputId">@Label</label>
+    <div class="sort-dropdown-controls">
+        <select id="@InputId" name="@Name">
+            @foreach (var option in Options)
+            {
+                <option value="@option.Value" selected="@(option.Value == SelectedValue)">@option.Label</option>
+            }
+        </select>
+        <button class="button-primary" type="submit">Sort</button>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string InputId { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string Name { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string Label { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public IReadOnlyList<SortOption> Options { get; set; } = [];
+    [Parameter] public string? SelectedValue { get; set; }
+}

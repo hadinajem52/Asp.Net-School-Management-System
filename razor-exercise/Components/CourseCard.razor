@@ -1,0 +1,20 @@
+<article class="course-card">
+    <p class="record-id">@Course.Id.ToString("D3")</p>
+    <h2><a href="@DetailsUrl">@Course.Name</a></h2>
+    <p class="course-card-description">@Course.Description</p>
+    <p class="course-card-credits">@Course.Credits credit@(Course.Credits == 1 ? string.Empty : "s")</p>
+    <div class="course-card-actions">
+        <a class="button-secondary" href="@DetailsUrl">View details</a>
+        @if (ShowManagementActions)
+        {
+            <a class="button-danger" href="@DeleteUrl">Delete</a>
+        }
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired] public Course Course { get; set; } = null!;
+    [Parameter, EditorRequired] public string DetailsUrl { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string DeleteUrl { get; set; } = string.Empty;
+    [Parameter] public bool ShowManagementActions { get; set; }
+}

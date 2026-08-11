@@ -1,0 +1,9 @@
+<div id="@Id" class="loading-indicator" hidden role="status" aria-live="polite">
+    <span class="loading-indicator-mark" aria-hidden="true"></span>
+    <span>@Message</span>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Id { get; set; } = string.Empty;
+    [Parameter] public string Message { get; set; } = "Saving…";
+}

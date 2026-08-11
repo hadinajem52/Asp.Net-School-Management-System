@@ -1,0 +1,16 @@
+<div class="delete-card" role="alert">
+    <p class="delete-card-label">@ItemLabel</p>
+    <p class="delete-card-name">@ItemName</p>
+    @if (!string.IsNullOrWhiteSpace(ItemDetail))
+    {
+        <p class="delete-card-email">@ItemDetail</p>
+    }
+    <p class="delete-warning">@Warning</p>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string ItemLabel { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string ItemName { get; set; } = string.Empty;
+    [Parameter] public string? ItemDetail { get; set; }
+    [Parameter, EditorRequired] public string Warning { get; set; } = string.Empty;
+}

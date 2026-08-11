@@ -1,0 +1,49 @@
+@if (TotalPages > 1)
+{
+    <nav class="pagination-controls" aria-label="Pagination">
+        @if (CurrentPage > 1)
+        {
+            <a class="button-secondary" href="@GetPageUrl(CurrentPage - 1)">Previous</a>
+        }
+        else
+        {
+            <span class="pagination-disabled">Previous</span>
+        }
+
+        <span class="pagination-summary">Page @CurrentPage of @TotalPages</span>
+
+        @if (CurrentPage < TotalPages)
+        {
+            <a class="button-secondary" href="@GetPageUrl(CurrentPage + 1)">Next</a>
+        }
+        else
+        {
+            <span class="pagination-disabled">Next</span>
+        }
+    </nav>
+}
+
+@code {
+    [Parameter, EditorRequired] public string PagePath { get; set; } = string.Empty;
+    [Parameter] public int CurrentPage { get; set; }
+    [Parameter] public int TotalPages { get; set; }
+    [Parameter] public string? SearchTerm { get; set; }
+    [Parameter] public string? SortBy { get; set; }
+
+    private string GetPageUrl(int pageNumber)
+    {
+        List<string> query = [$"PageNumber={pageNumber}"];
+
+        if (!string.IsNullOrWhiteSpace(SearchTerm))
+        {
+            query.Add($"SearchTerm={Uri.EscapeDataString(SearchTerm)}");
+        }
+
+        if (!string.IsNullOrWhiteSpace(SortBy))
+        {
+            query.Add($"SortBy={Uri.EscapeDataString(SortBy)}");
+        }
+
+        return $"{PagePath}?{string.Join("&", query)}";
+    }
+}
