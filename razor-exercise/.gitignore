@@ -3,6 +3,7 @@
 /obj/
 /verification-obj/
 /verification-output/
+/docs/
 
 # Visual Studio user-specific files
 /.vs/
