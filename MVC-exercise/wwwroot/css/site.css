@@ -206,6 +206,12 @@ body {
   color: #28513b;
 }
 
+.app-alert-error {
+  border-color: #9d3723;
+  background: #f8e7e1;
+  color: #762919;
+}
+
 .remember-choice {
   display: flex;
   align-items: center;
@@ -240,12 +246,40 @@ body {
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.035em;
+  text-decoration: none;
 }
 
 .button-primary:hover,
 .button-primary:focus {
   border-color: var(--rust);
   background: var(--rust);
+  color: var(--paper-light);
+}
+
+.button-danger {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid #9d3723;
+  background: #9d3723;
+  color: #fffafa;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+}
+
+.button-danger:hover,
+.button-danger:focus {
+  border-color: #712316;
+  background: #712316;
+}
+
+.access-denied-message {
+  margin: 0;
+  color: var(--ink-muted);
+  line-height: 1.6;
 }
 
 .account-switch {
@@ -440,6 +474,108 @@ body {
   font-size: 1.35rem;
 }
 
+.directory-hero {
+  margin: 3.8rem 0 2rem;
+}
+
+.directory-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.directory-heading h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.7rem, 8vw, 5.2rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+}
+
+.directory-heading p {
+  margin: 1rem 0 0;
+  color: var(--ink-muted);
+  font-size: 1.05rem;
+}
+
+.directory-total {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--navy);
+  color: var(--navy);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.directory-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 4rem;
+  border-top: 2px solid var(--ink);
+}
+
+.directory-table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+}
+
+.directory-table caption {
+  padding: 0.9rem 0;
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.directory-table th {
+  padding: 0.85rem 0.8rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--rust);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.directory-table td {
+  padding: 1.1rem 0.8rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-muted);
+  font-size: 0.93rem;
+}
+
+.directory-table th:first-child,
+.directory-table td:first-child {
+  padding-left: 0;
+}
+
+.directory-table th:last-child,
+.directory-table td:last-child {
+  padding-right: 0;
+}
+
+.directory-table .table-name {
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.1rem;
+}
+
+.directory-table .table-actions {
+  white-space: nowrap;
+}
+
+.account-request-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.account-request-actions form {
+  margin: 0;
+}
+
 @media (max-width: 600px) {
   .dashboard-hero {
     margin-top: 2.5rem;
@@ -461,6 +597,15 @@ body {
   .student-record time {
     grid-column: 2;
     text-align: left;
+  }
+
+  .directory-hero {
+    margin-top: 2.5rem;
+  }
+
+  .directory-heading {
+    align-items: start;
+    flex-direction: column;
   }
 
   .site-navigation {

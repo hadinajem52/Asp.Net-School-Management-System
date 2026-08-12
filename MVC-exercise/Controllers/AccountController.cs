@@ -10,6 +10,13 @@ public class AccountController(
     SignInManager<ApplicationUser> signInManager,
     UserManager<ApplicationUser> userManager) : Controller
 {
+    [Authorize]
+    [HttpGet]
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
+
     [AllowAnonymous]
     [HttpGet]
     public IActionResult Register()

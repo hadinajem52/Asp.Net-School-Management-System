@@ -15,6 +15,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<SchoolDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("SchoolDatabase")));
 builder.Services.AddScoped<SchoolDataService>();
+builder.Services.AddScoped<AccountApprovalService>();
 
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -31,6 +32,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
     options.AccessDeniedPath = "/Account/AccessDenied";
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
 });
 
 
