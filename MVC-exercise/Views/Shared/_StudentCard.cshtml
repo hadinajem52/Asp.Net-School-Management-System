@@ -1,0 +1,15 @@
+@model MVC_exercise.Models.Student
+
+<article class="student-record" role="listitem">
+    <span class="record-id">#@Model.Id.ToString("D3")</span>
+    <div>
+        <h3>
+            <a asp-controller="Students" asp-action="Details" asp-route-id="@Model.Id">@Model.FirstName @Model.LastName</a>
+        </h3>
+        <p>@Model.Email</p>
+    </div>
+    @if (Model.DateOfBirth is DateTime dateOfBirth)
+    {
+        <time datetime="@dateOfBirth.ToString("yyyy-MM-dd")">@dateOfBirth.ToString("MMM d, yyyy")</time>
+    }
+</article>

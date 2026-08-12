@@ -50,17 +50,15 @@
     </form>
 </div>
 
-@if (TempData["SuccessMessage"] is string successMessage)
-{
-    <div class="app-alert app-alert-success" role="status">@successMessage</div>
-}
+<partial name="_Alerts" />
 
 @if (students.Items.Count == 0)
 {
-    <div class="dashboard-empty-state">
-        <p class="empty-state-title">No students found.</p>
-        <p>Try another name or clear the current search.</p>
-    </div>
+    <partial name="_EmptyState" model="@(new MVC_exercise.ViewModels.Shared.EmptyStateViewModel
+    {
+        Title = "No students found.",
+        Message = "Try another name or clear the current search."
+    })" />
 }
 else
 {
@@ -106,25 +104,13 @@ else
         </table>
     </div>
 
-    <nav class="pagination-controls" aria-label="Student pages">
-        @if (students.PageNumber > 1)
-        {
-            <a class="button-secondary" asp-action="Index" asp-route-page="@(students.PageNumber - 1)" asp-route-searchTerm="@Model.SearchTerm" asp-route-sortBy="@Model.SortBy">Previous</a>
-        }
-        else
-        {
-            <span class="pagination-disabled">Previous</span>
-        }
-
-        <span class="pagination-summary">Page @students.PageNumber of @students.TotalPages</span>
-
-        @if (students.PageNumber < students.TotalPages)
-        {
-            <a class="button-secondary" asp-action="Index" asp-route-page="@(students.PageNumber + 1)" asp-route-searchTerm="@Model.SearchTerm" asp-route-sortBy="@Model.SortBy">Next</a>
-        }
-        else
-        {
-            <span class="pagination-disabled">Next</span>
-        }
-    </nav>
+    <partial name="_Pagination" model="@(new MVC_exercise.ViewModels.Shared.PaginationViewModel
+    {
+        AriaLabel = "Student pages",
+        Controller = "Students",
+        PageNumber = students.PageNumber,
+        TotalPages = students.TotalPages,
+        SearchTerm = Model.SearchTerm,
+        SortBy = Model.SortBy
+    })" />
 }

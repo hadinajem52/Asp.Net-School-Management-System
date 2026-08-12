@@ -39,26 +39,18 @@
 
     @if (Model.RecentStudents.Count == 0)
     {
-        <div class="dashboard-empty-state">
-            <p class="empty-state-title">No students have been added yet.</p>
-            <p>When you create a student record, it will appear here.</p>
-        </div>
+        <partial name="_EmptyState" model="@(new MVC_exercise.ViewModels.Shared.EmptyStateViewModel
+        {
+            Title = "No students have been added yet.",
+            Message = "When you create a student record, it will appear here."
+        })" />
     }
     else
     {
         <div class="student-records" role="list">
             @foreach (var student in Model.RecentStudents)
             {
-                <article class="student-record" role="listitem">
-                    <span class="record-id">#@student.Id.ToString("D3")</span>
-                    <div>
-                        <h3><a asp-controller="Students" asp-action="Details" asp-route-id="@student.Id">@student.FirstName @student.LastName</a></h3>
-                        <p>@student.Email</p>
-                    </div>
-                    <time datetime="@student.DateOfBirth?.ToString("yyyy-MM-dd")">
-                        @student.DateOfBirth?.ToString("MMM d, yyyy")
-                    </time>
-                </article>
+                <partial name="_StudentCard" model="student" />
             }
         </div>
     }

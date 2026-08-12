@@ -15,7 +15,10 @@
         <p class="delete-warning">Deleting this course also removes all of its enrollments. This action cannot be undone.</p>
     </div>
 
-    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="form-actions">
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="form-actions"
+          data-confirm-title="Delete @Model.Name?"
+          data-confirm-message="This removes the course and every related enrollment. This action cannot be undone."
+          data-confirm-label="Delete course">
         <button type="submit" class="button-danger">Delete course</button>
         <a class="button-secondary" asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
     </form>

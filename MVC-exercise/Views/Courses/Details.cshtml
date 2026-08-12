@@ -9,10 +9,7 @@
     <h1 id="course-name">@Model.Course.Name</h1>
     <p class="profile-subtitle">@Model.Course.Description</p>
 
-    @if (TempData["SuccessMessage"] is string successMessage)
-    {
-        <div class="app-alert app-alert-success" role="status">@successMessage</div>
-    }
+    <partial name="_Alerts" />
 
     @if (User.IsInRole("Admin"))
     {
@@ -45,25 +42,18 @@
 
         @if (Model.EnrolledStudents.Count == 0)
         {
-            <div class="dashboard-empty-state">
-                <p class="empty-state-title">No students yet.</p>
-                <p>No students are currently enrolled in this course.</p>
-            </div>
+            <partial name="_EmptyState" model="@(new MVC_exercise.ViewModels.Shared.EmptyStateViewModel
+            {
+                Title = "No students yet.",
+                Message = "No students are currently enrolled in this course."
+            })" />
         }
         else
         {
             <div class="student-records">
                 @foreach (var student in Model.EnrolledStudents)
                 {
-                    <article class="student-record">
-                        <span class="record-id">@student.Id.ToString("D3")</span>
-                        <div>
-                            <h3>
-                                <a asp-controller="Students" asp-action="Details" asp-route-id="@student.Id">@student.FirstName @student.LastName</a>
-                            </h3>
-                            <p>@student.Email</p>
-                        </div>
-                    </article>
+                    <partial name="_StudentCard" model="student" />
                 }
             </div>
         }

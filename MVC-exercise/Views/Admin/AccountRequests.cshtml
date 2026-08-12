@@ -15,22 +15,15 @@
     </div>
 </section>
 
-@if (TempData["SuccessMessage"] is string successMessage)
-{
-    <div class="app-alert app-alert-success" role="status">@successMessage</div>
-}
-
-@if (TempData["ErrorMessage"] is string errorMessage)
-{
-    <div class="app-alert app-alert-error" role="alert">@errorMessage</div>
-}
+<partial name="_Alerts" />
 
 @if (Model.Count == 0)
 {
-    <div class="dashboard-empty-state">
-        <p class="empty-state-title">No pending requests.</p>
-        <p>New signup requests will appear here for review.</p>
-    </div>
+    <partial name="_EmptyState" model="@(new MVC_exercise.ViewModels.Shared.EmptyStateViewModel
+    {
+        Title = "No pending requests.",
+        Message = "New signup requests will appear here for review."
+    })" />
 }
 else
 {
@@ -55,7 +48,10 @@ else
                                 <input type="hidden" name="id" value="@account.Id" />
                                 <button type="submit" class="button-primary">Approve</button>
                             </form>
-                            <form asp-action="Reject" method="post">
+                            <form asp-action="Reject" method="post"
+                                  data-confirm-title="Reject this account request?"
+                                  data-confirm-message="The applicant will not be able to sign in with this account."
+                                  data-confirm-label="Reject request">
                                 <input type="hidden" name="id" value="@account.Id" />
                                 <button type="submit" class="button-danger">Reject</button>
                             </form>

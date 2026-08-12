@@ -1,0 +1,12 @@
+@model MVC_exercise.Models.Course
+
+<article class="student-record" role="listitem">
+    <span class="record-id">#@Model.Id.ToString("D3")</span>
+    <div>
+        <h3>
+            <a asp-controller="Courses" asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a>
+        </h3>
+        <p>@Model.Description</p>
+    </div>
+    <span class="course-credits">@Model.Credits credit@(Model.Credits == 1 ? string.Empty : "s")</span>
+</article>

@@ -9,10 +9,7 @@
     <h1 id="login-heading">Sign in</h1>
     <p class="form-introduction">Sign in with an approved account to access academic records.</p>
 
-    @if (TempData["RegistrationMessage"] is string registrationMessage)
-    {
-        <div class="app-alert app-alert-success" role="status">@registrationMessage</div>
-    }
+    <partial name="_Alerts" />
 
     <form asp-action="Login" method="post" class="auth-form">
         <input asp-for="ReturnUrl" type="hidden" />
@@ -43,7 +40,3 @@
 
     <p class="account-switch">Need an account? <a asp-action="Register">Request access</a></p>
 </section>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
