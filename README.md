@@ -29,13 +29,6 @@ The MVC version also includes progressive AJAX navigation and form submission, r
 └── README.md
 ```
 
-Detailed learning notes:
-
-- [MVC building process](MVC-exercise/docs/MVCBuildingProcess.md)
-- [Razor Pages building process](razor-exercise/docs/RazorBuildingProcess.md)
-- [MVC database diagram](MVC-exercise/Models/Diagram/database-structure.md)
-- [Razor database diagram](razor-exercise/Data/database-structure.md)
-
 ## Prerequisites
 
 - .NET SDK with .NET 10 support.
