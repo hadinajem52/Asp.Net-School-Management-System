@@ -1,0 +1,22 @@
+@model MVC_exercise.Models.Course
+@{
+    ViewData["Title"] = "Delete course";
+}
+
+<section class="delete-page" aria-labelledby="delete-course-title">
+    <a class="back-link" asp-action="Details" asp-route-id="@Model.Id">← Back to course</a>
+    <p class="eyebrow">Permanent action</p>
+    <h1 id="delete-course-title">Delete course</h1>
+
+    <div class="delete-card">
+        <p class="delete-card-label">Course record</p>
+        <p class="delete-card-name">@Model.Name</p>
+        <p class="delete-card-email">@Model.Credits credit@(Model.Credits == 1 ? string.Empty : "s")</p>
+        <p class="delete-warning">Deleting this course also removes all of its enrollments. This action cannot be undone.</p>
+    </div>
+
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="form-actions">
+        <button type="submit" class="button-danger">Delete course</button>
+        <a class="button-secondary" asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
+    </form>
+</section>

@@ -162,7 +162,8 @@ body {
   color: var(--rust);
 }
 
-.form-field input {
+.form-field input,
+.form-field textarea {
   width: 100%;
   min-height: 43px;
   padding: 0.6rem 0.7rem;
@@ -173,7 +174,12 @@ body {
   font: inherit;
 }
 
-.form-field input:focus {
+.form-field textarea {
+  resize: vertical;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
   outline: 3px solid rgba(185, 92, 55, 0.22);
   border-color: var(--rust);
 }
@@ -615,18 +621,25 @@ body {
 }
 
 .student-search,
-.student-sort {
+.student-sort,
+.course-search {
   display: grid;
   gap: 0.5rem;
 }
 
 .student-search > label,
-.student-sort > label {
+.student-sort > label,
+.course-search > label {
   color: var(--rust);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.course-search {
+  max-width: 680px;
+  margin-bottom: 1.5rem;
 }
 
 .filter-controls {
@@ -803,7 +816,8 @@ body {
   text-underline-offset: 0.22rem;
 }
 
-.student-form {
+.student-form,
+.course-form {
   padding: 1.7rem;
   border: 1px solid var(--rule);
   background: var(--paper-light);
@@ -820,7 +834,8 @@ body {
   grid-column: 1 / -1;
 }
 
-.student-form .form-actions {
+.student-form .form-actions,
+.course-form .form-actions {
   margin-top: 2rem;
 }
 
@@ -932,7 +947,8 @@ body {
     grid-column: auto;
   }
 
-  .student-form {
+  .student-form,
+  .course-form {
     padding: 1.2rem;
   }
 

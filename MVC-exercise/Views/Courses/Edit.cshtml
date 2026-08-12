@@ -1,0 +1,24 @@
+@model MVC_exercise.Models.Course
+@{
+    ViewData["Title"] = "Edit course";
+}
+
+<section class="form-page" aria-labelledby="edit-course-title">
+    <a class="back-link" asp-action="Details" asp-route-id="@Model.Id">← Back to course</a>
+    <p class="eyebrow">Update catalogue record</p>
+    <h1 id="edit-course-title">Edit course</h1>
+    <p class="form-introduction">Update the course name, description, or credit value.</p>
+
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="course-form">
+        <input asp-for="Id" type="hidden" />
+        <partial name="_CourseForm" model="Model" />
+        <div class="form-actions">
+            <button type="submit" class="button-primary">Save changes</button>
+            <a class="button-secondary" asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

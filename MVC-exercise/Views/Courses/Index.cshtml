@@ -1,0 +1,107 @@
+@model MVC_exercise.ViewModels.Courses.CourseListViewModel
+@{
+    ViewData["Title"] = "Courses";
+    var courses = Model.Courses;
+}
+
+<section class="directory-hero" aria-labelledby="courses-title">
+    <p class="eyebrow">Course catalogue</p>
+    <div class="directory-heading">
+        <div>
+            <h1 id="courses-title">Courses</h1>
+            <p>Browse every course currently offered in the programme.</p>
+        </div>
+
+        <div class="directory-actions">
+            <span class="directory-total">@courses.TotalCount record@(courses.TotalCount == 1 ? string.Empty : "s")</span>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="button-primary" asp-action="Create">Add course</a>
+            }
+        </div>
+    </div>
+</section>
+
+<form method="get" class="course-search" role="search">
+    <label for="course-search-input">Search courses</label>
+    <div class="filter-controls">
+        <input id="course-search-input" name="searchTerm" value="@Model.SearchTerm" placeholder="Search by course name" />
+        <button class="button-primary" type="submit">Search</button>
+        @if (!string.IsNullOrWhiteSpace(Model.SearchTerm))
+        {
+            <a class="button-secondary" asp-action="Index">Clear</a>
+        }
+    </div>
+</form>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <div class="app-alert app-alert-success" role="status">@successMessage</div>
+}
+
+@if (courses.Items.Count == 0)
+{
+    <div class="dashboard-empty-state">
+        <p class="empty-state-title">No courses found.</p>
+        <p>Try another course name or clear the current search.</p>
+    </div>
+}
+else
+{
+    <div class="directory-table-wrap">
+        <table class="directory-table">
+            <caption>Courses ordered by name</caption>
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Course</th>
+                    <th scope="col">Credits</th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th scope="col">Actions</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in courses.Items)
+                {
+                    <tr>
+                        <td class="table-id">@course.Id.ToString("D3")</td>
+                        <td class="table-name">
+                            <a asp-action="Details" asp-route-id="@course.Id">@course.Name</a>
+                        </td>
+                        <td>@course.Credits credit@(course.Credits == 1 ? string.Empty : "s")</td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td class="table-actions">
+                                <a class="button-danger" asp-action="Delete" asp-route-id="@course.Id">Delete</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <nav class="pagination-controls" aria-label="Course pages">
+        @if (courses.PageNumber > 1)
+        {
+            <a class="button-secondary" asp-action="Index" asp-route-page="@(courses.PageNumber - 1)" asp-route-searchTerm="@Model.SearchTerm">Previous</a>
+        }
+        else
+        {
+            <span class="pagination-disabled">Previous</span>
+        }
+
+        <span class="pagination-summary">Page @courses.PageNumber of @courses.TotalPages</span>
+
+        @if (courses.PageNumber < courses.TotalPages)
+        {
+            <a class="button-secondary" asp-action="Index" asp-route-page="@(courses.PageNumber + 1)" asp-route-searchTerm="@Model.SearchTerm">Next</a>
+        }
+        else
+        {
+            <span class="pagination-disabled">Next</span>
+        }
+    </nav>
+}

@@ -1,0 +1,23 @@
+@model MVC_exercise.Models.Course
+
+<div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+
+<div class="form-grid">
+    <div class="form-field form-field-wide">
+        <label asp-for="Name">Course name <span aria-hidden="true">*</span></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name" class="field-error"></span>
+    </div>
+
+    <div class="form-field form-field-wide">
+        <label asp-for="Description">Description <span aria-hidden="true">*</span></label>
+        <textarea asp-for="Description" rows="5"></textarea>
+        <span asp-validation-for="Description" class="field-error"></span>
+    </div>
+
+    <div class="form-field">
+        <label asp-for="Credits">Credits <span aria-hidden="true">*</span></label>
+        <input asp-for="Credits" min="1" max="6" />
+        <span asp-validation-for="Credits" class="field-error"></span>
+    </div>
+</div>

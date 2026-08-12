@@ -1,0 +1,71 @@
+@model MVC_exercise.ViewModels.Courses.CourseDetailsViewModel
+@{
+    ViewData["Title"] = Model.Course.Name;
+}
+
+<section class="student-profile" aria-labelledby="course-name">
+    <a class="back-link" asp-action="Index">← Back to courses</a>
+    <p class="eyebrow">Course record · @Model.Course.Id.ToString("D3")</p>
+    <h1 id="course-name">@Model.Course.Name</h1>
+    <p class="profile-subtitle">@Model.Course.Description</p>
+
+    @if (TempData["SuccessMessage"] is string successMessage)
+    {
+        <div class="app-alert app-alert-success" role="status">@successMessage</div>
+    }
+
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="profile-actions">
+            <a class="button-primary" asp-action="Edit" asp-route-id="@Model.Course.Id">Edit course</a>
+            <a class="button-danger" asp-action="Delete" asp-route-id="@Model.Course.Id">Delete course</a>
+        </div>
+    }
+
+    <dl class="record-details">
+        <div>
+            <dt>Course ID</dt>
+            <dd>@Model.Course.Id.ToString("D3")</dd>
+        </div>
+        <div>
+            <dt>Credits</dt>
+            <dd>@Model.Course.Credits</dd>
+        </div>
+        <div class="record-details-wide">
+            <dt>Description</dt>
+            <dd>@Model.Course.Description</dd>
+        </div>
+    </dl>
+
+    <section class="enrollment-section" aria-labelledby="enrolled-students-title">
+        <div class="section-heading">
+            <h2 id="enrolled-students-title">Enrolled students</h2>
+            <span class="record-count">@Model.EnrolledStudents.Count student@(Model.EnrolledStudents.Count == 1 ? string.Empty : "s")</span>
+        </div>
+
+        @if (Model.EnrolledStudents.Count == 0)
+        {
+            <div class="dashboard-empty-state">
+                <p class="empty-state-title">No students yet.</p>
+                <p>No students are currently enrolled in this course.</p>
+            </div>
+        }
+        else
+        {
+            <div class="student-records">
+                @foreach (var student in Model.EnrolledStudents)
+                {
+                    <article class="student-record">
+                        <span class="record-id">@student.Id.ToString("D3")</span>
+                        <div>
+                            <h3>
+                                <a asp-controller="Students" asp-action="Details" asp-route-id="@student.Id">@student.FirstName @student.LastName</a>
+                            </h3>
+                            <p>@student.Email</p>
+                        </div>
+                    </article>
+                }
+            </div>
+        }
+    </section>
+</section>
