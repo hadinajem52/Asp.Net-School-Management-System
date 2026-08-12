@@ -52,7 +52,7 @@
                 <article class="student-record" role="listitem">
                     <span class="record-id">#@student.Id.ToString("D3")</span>
                     <div>
-                        <h3>@student.FirstName @student.LastName</h3>
+                        <h3><a asp-controller="Students" asp-action="Details" asp-route-id="@student.Id">@student.FirstName @student.LastName</a></h3>
                         <p>@student.Email</p>
                     </div>
                     <time datetime="@student.DateOfBirth?.ToString("yyyy-MM-dd")">

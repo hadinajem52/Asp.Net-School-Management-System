@@ -500,6 +500,12 @@ body {
   font-size: 1.05rem;
 }
 
+.directory-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .directory-total {
   padding: 0.6rem 0.8rem;
   border: 1px solid var(--navy);
@@ -562,6 +568,31 @@ body {
   font-size: 1.1rem;
 }
 
+.directory-table a {
+  color: var(--navy);
+  text-decoration-color: #9bb1bf;
+  text-underline-offset: 0.2rem;
+}
+
+.directory-table .table-id {
+  color: var(--rust);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+}
+
+.directory-table .table-name a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.directory-table .table-name a:hover,
+.directory-table .table-name a:focus {
+  color: var(--rust);
+  text-decoration: underline;
+  text-decoration-color: #d7a891;
+  text-underline-offset: 0.22rem;
+}
+
 .directory-table .table-actions {
   white-space: nowrap;
 }
@@ -574,6 +605,267 @@ body {
 
 .account-request-actions form {
   margin: 0;
+}
+
+.student-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(240px, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.student-search,
+.student-sort {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.student-search > label,
+.student-sort > label {
+  color: var(--rust);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.filter-controls {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.filter-controls input,
+.filter-controls select {
+  min-width: 0;
+  min-height: 38px;
+  flex: 1 1 auto;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #b9ad9a;
+  border-radius: 0;
+  background: var(--paper-light);
+  color: var(--ink);
+  font: inherit;
+}
+
+.filter-controls input:focus,
+.filter-controls select:focus {
+  outline: 3px solid rgba(185, 92, 55, 0.22);
+  border-color: var(--rust);
+}
+
+.button-secondary {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--navy);
+  background: transparent;
+  color: var(--navy);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  text-decoration: none;
+}
+
+.button-secondary:hover,
+.button-secondary:focus {
+  border-color: var(--rust);
+  color: var(--rust);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin: -2.5rem 0 4rem;
+}
+
+.pagination-summary,
+.pagination-disabled {
+  color: var(--ink-muted);
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+
+.pagination-disabled {
+  min-height: 38px;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--rule);
+  color: #9a978f;
+}
+
+.student-profile,
+.form-page {
+  max-width: 780px;
+  margin: 3.8rem 0 4rem;
+}
+
+.student-profile h1,
+.form-page h1,
+.delete-page h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.7rem, 8vw, 4.4rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+}
+
+.profile-subtitle {
+  margin: 1rem 0 2rem;
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+
+.profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 0 0 2rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 2rem;
+  color: var(--navy);
+  font-size: 0.86rem;
+  text-decoration-color: #9bb1bf;
+  text-underline-offset: 0.2rem;
+}
+
+.record-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  border-top: 2px solid var(--ink);
+}
+
+.record-details div {
+  min-height: 126px;
+  padding: 1.35rem 1.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.record-details div:nth-child(odd) {
+  border-right: 1px solid var(--rule);
+}
+
+.record-details .record-details-wide {
+  grid-column: 1 / -1;
+  border-right: 0;
+}
+
+.record-details dt {
+  margin-bottom: 0.75rem;
+  color: var(--rust);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.record-details dd {
+  margin: 0;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.25rem;
+}
+
+.record-details a {
+  color: var(--navy);
+  text-decoration-color: #9bb1bf;
+  text-underline-offset: 0.2rem;
+}
+
+.enrollment-section {
+  margin-top: 4rem;
+}
+
+.course-credits {
+  color: var(--ink-muted);
+  font-size: 0.88rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.student-record h3 a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.student-record h3 a:hover,
+.student-record h3 a:focus {
+  color: var(--rust);
+  text-decoration: underline;
+  text-decoration-color: #d7a891;
+  text-underline-offset: 0.22rem;
+}
+
+.student-form {
+  padding: 1.7rem;
+  border: 1px solid var(--rule);
+  background: var(--paper-light);
+  box-shadow: var(--shadow);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.3rem;
+}
+
+.form-field-wide {
+  grid-column: 1 / -1;
+}
+
+.student-form .form-actions {
+  margin-top: 2rem;
+}
+
+.delete-page {
+  max-width: 660px;
+  margin: 3.8rem 0 4rem;
+}
+
+.delete-card {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #d6a28f;
+  border-left: 4px solid #9d3723;
+  background: #fff8f4;
+}
+
+.delete-card p {
+  margin: 0;
+}
+
+.delete-card-label {
+  margin-bottom: 0.65rem !important;
+  color: #9d3723;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.delete-card-name {
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.55rem;
+}
+
+.delete-card-email {
+  margin-top: 0.35rem !important;
+  color: var(--ink-muted);
+}
+
+.delete-warning {
+  margin-top: 1.35rem !important;
+  color: #762919;
+  font-size: 0.88rem;
+  font-weight: 700;
 }
 
 @media (max-width: 600px) {
@@ -606,6 +898,47 @@ body {
   .directory-heading {
     align-items: start;
     flex-direction: column;
+  }
+
+  .directory-actions,
+  .student-filters,
+  .filter-controls,
+  .pagination-controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .student-filters {
+    display: flex;
+  }
+
+  .student-profile,
+  .form-page,
+  .delete-page {
+    margin-top: 2.5rem;
+  }
+
+  .record-details,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .record-details div:nth-child(odd) {
+    border-right: 0;
+  }
+
+  .record-details .record-details-wide,
+  .form-field-wide {
+    grid-column: auto;
+  }
+
+  .student-form {
+    padding: 1.2rem;
+  }
+
+  .course-credits {
+    grid-column: 2;
+    text-align: left;
   }
 
   .site-navigation {

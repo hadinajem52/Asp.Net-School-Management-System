@@ -17,3 +17,5 @@ AGENTS.md
 
 # Local-only ASP.NET Core settings
 **/appsettings.Local.json
+
+**/WhenToCreateAModel.md

@@ -1,0 +1,29 @@
+@model MVC_exercise.Models.Student
+
+<div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+
+<div class="form-grid">
+    <div class="form-field">
+        <label asp-for="FirstName">First name <span aria-hidden="true">*</span></label>
+        <input asp-for="FirstName" autocomplete="given-name" />
+        <span asp-validation-for="FirstName" class="field-error"></span>
+    </div>
+
+    <div class="form-field">
+        <label asp-for="LastName">Last name <span aria-hidden="true">*</span></label>
+        <input asp-for="LastName" autocomplete="family-name" />
+        <span asp-validation-for="LastName" class="field-error"></span>
+    </div>
+
+    <div class="form-field form-field-wide">
+        <label asp-for="Email">Email <span aria-hidden="true">*</span></label>
+        <input asp-for="Email" autocomplete="email" />
+        <span asp-validation-for="Email" class="field-error"></span>
+    </div>
+
+    <div class="form-field form-field-wide">
+        <label asp-for="DateOfBirth">Date of birth <span aria-hidden="true">*</span></label>
+        <input asp-for="DateOfBirth" type="date" />
+        <span asp-validation-for="DateOfBirth" class="field-error"></span>
+    </div>
+</div>

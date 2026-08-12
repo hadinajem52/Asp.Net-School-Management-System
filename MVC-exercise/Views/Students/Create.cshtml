@@ -1,0 +1,23 @@
+@model MVC_exercise.Models.Student
+@{
+    ViewData["Title"] = "Add student";
+}
+
+<section class="form-page" aria-labelledby="create-student-title">
+    <a class="back-link" asp-action="Index">← Back to students</a>
+    <p class="eyebrow">New directory record</p>
+    <h1 id="create-student-title">Add student</h1>
+    <p class="form-introduction">Enter the learner’s contact information and date of birth.</p>
+
+    <form asp-action="Create" method="post" class="student-form">
+        <partial name="_StudentForm" model="Model" />
+        <div class="form-actions">
+            <button type="submit" class="button-primary">Create student</button>
+            <a class="button-secondary" asp-action="Index">Cancel</a>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

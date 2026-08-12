@@ -10,6 +10,8 @@ namespace MVC_exercise.Controllers;
 [Authorize]
 public class HomeController(SchoolDataService schoolData) : Controller
 {
+    // we dont use route attribute because the controller name is HomeController and the action name is Index,
+    // so the route will be /Home/Index
     public async Task<IActionResult> Index()
     {
         var viewModel = new DashboardViewModel

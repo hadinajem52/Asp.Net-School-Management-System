@@ -4,10 +4,14 @@ using MVC_exercise.Services;
 
 namespace MVC_exercise.Controllers;
 
-[Authorize(Policy = "AdminOnly")]
+
+
+[Authorize(Roles = "Admin")]
 [Route("Admin/AccountRequests")]
 public class AdminController(AccountApprovalService accountApproval) : Controller
 {
+
+    //we use route attribute because the controller name is not AdminController but Admin/AccountRequests
     [HttpGet("")]
     public async Task<IActionResult> AccountRequests()
     {

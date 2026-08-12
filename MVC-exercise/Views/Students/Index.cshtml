@@ -1,0 +1,130 @@
+@model MVC_exercise.ViewModels.Students.StudentListViewModel
+@{
+    ViewData["Title"] = "Students";
+    var students = Model.Students;
+}
+
+<section class="directory-hero" aria-labelledby="students-title">
+    <p class="eyebrow">Student directory</p>
+    <div class="directory-heading">
+        <div>
+            <h1 id="students-title">Students</h1>
+            <p>Every learner currently registered in the course manager.</p>
+        </div>
+
+        <div class="directory-actions">
+            <span class="directory-total">@students.TotalCount record@(students.TotalCount == 1 ? string.Empty : "s")</span>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="button-primary" asp-action="Create">Add student</a>
+            }
+        </div>
+    </div>
+</section>
+
+<div class="student-filters">
+    <form method="get" class="student-search" role="search">
+        <input type="hidden" name="sortBy" value="@Model.SortBy" />
+        <label for="student-search-input">Search students</label>
+        <div class="filter-controls">
+            <input id="student-search-input" name="searchTerm" value="@Model.SearchTerm" placeholder="Search by first or last name" />
+            <button class="button-primary" type="submit">Search</button>
+            @if (!string.IsNullOrWhiteSpace(Model.SearchTerm))
+            {
+                <a class="button-secondary" asp-action="Index" asp-route-sortBy="@Model.SortBy">Clear</a>
+            }
+        </div>
+    </form>
+
+    <form method="get" class="student-sort">
+        <input type="hidden" name="searchTerm" value="@Model.SearchTerm" />
+        <label for="student-sort-select">Sort students</label>
+        <div class="filter-controls">
+            <select id="student-sort-select" name="sortBy">
+                <option value="LastName" selected="@(Model.SortBy is null or "LastName")">Last name</option>
+                <option value="FirstName" selected="@(Model.SortBy == "FirstName")">First name</option>
+                <option value="DateOfBirth" selected="@(Model.SortBy == "DateOfBirth")">Date of birth</option>
+            </select>
+            <button class="button-primary" type="submit">Sort</button>
+        </div>
+    </form>
+</div>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <div class="app-alert app-alert-success" role="status">@successMessage</div>
+}
+
+@if (students.Items.Count == 0)
+{
+    <div class="dashboard-empty-state">
+        <p class="empty-state-title">No students found.</p>
+        <p>Try another name or clear the current search.</p>
+    </div>
+}
+else
+{
+    <div class="directory-table-wrap">
+        <table class="directory-table">
+            <caption>Students in the selected order</caption>
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Student</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Date of birth</th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th scope="col">Actions</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in students.Items)
+                {
+                    <tr>
+                        <td class="table-id">@student.Id.ToString("D3")</td>
+                        <td class="table-name">
+                            <a asp-action="Details" asp-route-id="@student.Id">@student.FirstName @student.LastName</a>
+                        </td>
+                        <td><a href="mailto:@student.Email">@student.Email</a></td>
+                        <td>
+                            @if (student.DateOfBirth is DateTime dateOfBirth)
+                            {
+                                <time datetime="@dateOfBirth.ToString("yyyy-MM-dd")">@dateOfBirth.ToString("dd MMM yyyy")</time>
+                            }
+                        </td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td class="table-actions">
+                                <a class="button-danger" asp-action="Delete" asp-route-id="@student.Id">Delete</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <nav class="pagination-controls" aria-label="Student pages">
+        @if (students.PageNumber > 1)
+        {
+            <a class="button-secondary" asp-action="Index" asp-route-page="@(students.PageNumber - 1)" asp-route-searchTerm="@Model.SearchTerm" asp-route-sortBy="@Model.SortBy">Previous</a>
+        }
+        else
+        {
+            <span class="pagination-disabled">Previous</span>
+        }
+
+        <span class="pagination-summary">Page @students.PageNumber of @students.TotalPages</span>
+
+        @if (students.PageNumber < students.TotalPages)
+        {
+            <a class="button-secondary" asp-action="Index" asp-route-page="@(students.PageNumber + 1)" asp-route-searchTerm="@Model.SearchTerm" asp-route-sortBy="@Model.SortBy">Next</a>
+        }
+        else
+        {
+            <span class="pagination-disabled">Next</span>
+        }
+    </nav>
+}

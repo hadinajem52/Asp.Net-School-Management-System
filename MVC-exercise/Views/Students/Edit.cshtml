@@ -1,0 +1,24 @@
+@model MVC_exercise.Models.Student
+@{
+    ViewData["Title"] = "Edit student";
+}
+
+<section class="form-page" aria-labelledby="edit-student-title">
+    <a class="back-link" asp-action="Details" asp-route-id="@Model.Id">← Back to student</a>
+    <p class="eyebrow">Update directory record</p>
+    <h1 id="edit-student-title">Edit student</h1>
+    <p class="form-introduction">Update the learner’s current directory information.</p>
+
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="student-form">
+        <input asp-for="Id" type="hidden" />
+        <partial name="_StudentForm" model="Model" />
+        <div class="form-actions">
+            <button type="submit" class="button-primary">Save changes</button>
+            <a class="button-secondary" asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
